@@ -1,0 +1,28 @@
+# For shipToCustAccNum
+    result_df = df.withColumn(
+        "request_body_json_shipToCustAccNum_final",
+        when(
+            (col("request_body_json_shipToCustAccNum").isNotNull()) & (col("request_body_json_items_shipToCustAccNum").isNull()),
+            col("request_body_json_shipToCustAccNum")
+        )
+        .when(
+            (col("request_body_json_shipToCustAccNum").isNull()) & (col("request_body_json_items_shipToCustAccNum").isNotNull()),
+            col("request_body_json_items_shipToCustAccNum")
+        )
+        .when(
+            (col("request_body_json_shipToCustAccNum").isNull()) & (col("request_body_json_items_shipToCustAccNum").isNull()),
+            col("request_body_json_items_shipToCustAccNum")
+        )
+        .when(
+            (col("request_body_json_shipToCustAccNum").isNotNull()) & (col("request_body_json_items_shipToCustAccNum").isNotNull()),
+            col("request_body_json_items_shipToCustAccNum")
+        )
+       
+    )
+    # # .drop("request_body_json_shipToCustAccNum")  # Drop the original column
+ 
+    # # # Rename the new column to replace the original column
+    # result_df = result_df.withColumnRenamed("request_body_json_shipToCustAccNum_final", "request_body_json_shipToCustAccNum")
+ 
+    # Display the result
+    display(result_df)
